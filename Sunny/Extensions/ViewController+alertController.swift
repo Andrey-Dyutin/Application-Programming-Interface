@@ -19,8 +19,8 @@ extension ViewController {
                                    message: message,
                                    preferredStyle: style)
         ac.addTextField { tf in
-//            let cities = ["San Francisco", "Moscow", "New York", "Stambul", "Viena"]
-//            tf.placeholder = cities.randomElement()
+            let cities = ["San Francisco", "Moscow", "New York", "Stambul", "Viena"]
+            tf.placeholder = cities.randomElement()
         }
         let search = UIAlertAction(title:"Search",
                                    style: .default) { action in

@@ -8,9 +8,13 @@
 
 import Foundation
 
-struct NetworkWeatherManager {
-    
-    var onCompletion: ((CurrentWeather) -> Void)?
+protocol NetworkWeatherManagerDelegate: class {
+    func updateInterface(_: NetworkWeatherManager, with currentWeather: CurrentWeather)
+}
+
+class NetworkWeatherManager {
+    weak var delegate: NetworkWeatherManagerDelegate?
+    //var onCompletion: ((CurrentWeather) -> Void)?
     
     func fetchCurrentWeather(forCity city: String) {
         let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(city)&apikey=ce12a225cd6dd8e399207d69bf204208"
@@ -19,7 +23,9 @@ struct NetworkWeatherManager {
         let task = session.dataTask(with: url) { data, response, error in
             if let data = data {
                 if let currentWeather = self.parseJSON(withData: data) {
-                    self.onCompletion?(currentWeather)
+                    //self.onCompletion?(currentWeather)
+                    self.delegate?.updateInterface(self, with: currentWeather)
+                    
                 }
             }
         }
